@@ -7,13 +7,13 @@ import java.util.Map;
 
 public interface EmployeeService {
 
+    Map<Integer, List<Employee>> getAllEmployeesByDepartments();
+
     Employee getEmployeeWithMaxSalary(Integer departmentId);
 
     Employee getEmployeeWithMinSalary(Integer departmentId);
 
     List<Employee> getAllEmployees(Integer departmentId);
-
-    Map<Integer, List<Employee>> getAllEmployeesByDepartments(Integer departmentId);
 
     Employee addEmployee(String name, Integer department, Integer salary);
 

@@ -7,7 +7,7 @@ import pro.sky.stream_api_optional_2_8.exceptions.ArrayIsFullException;
 import pro.sky.stream_api_optional_2_8.exceptions.EmployeeAlreadyAddedException;
 import pro.sky.stream_api_optional_2_8.exceptions.EmployeeNotFoundException;
 import pro.sky.stream_api_optional_2_8.model.ErrorDTO;
-import pro.sky.stream_api_optional_2_8.model.ResponseException;
+import pro.sky.stream_api_optional_2_8.exceptions.ResponseException;
 
 import java.util.Date;
 import java.util.function.Function;
@@ -20,7 +20,7 @@ public class GlobalExceptionHandler {
         errorDTO.setStatus(String.valueOf(((ResponseException) ex).getStatus().value()));
         errorDTO.setTime(new Date().toString());
 
-        return responseFunction.apply(ex);
+        return ResponseEntity.status(((ResponseException) ex).getStatus()).body(errorDTO);
     }
 
     private Function<Exception, ResponseEntity<ErrorDTO>> generateResponseFunction() {

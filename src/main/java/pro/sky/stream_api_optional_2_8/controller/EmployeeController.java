@@ -32,8 +32,8 @@ public class EmployeeController {
 
 
     @GetMapping("/all-by-departments")
-    public Map<Integer, List<Employee>> getAllEmployeesByDepartments(Integer departmentId) {
-        return employeeService.getAllEmployeesByDepartments(departmentId);
+    public Map<Integer, List<Employee>> getAllEmployeesByDepartments() {
+        return employeeService.getAllEmployeesByDepartments();
     }
 
     @PostMapping("/add-employee")

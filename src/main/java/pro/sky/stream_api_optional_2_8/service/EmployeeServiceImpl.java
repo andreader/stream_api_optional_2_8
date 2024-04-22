@@ -1,5 +1,6 @@
 package pro.sky.stream_api_optional_2_8.service;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import pro.sky.stream_api_optional_2_8.exceptions.ArrayIsFullException;
 import pro.sky.stream_api_optional_2_8.exceptions.EmployeeAlreadyAddedException;
@@ -31,7 +32,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         return getAllEmployees().stream()
                 .filter((employee) -> employee.getDepartment().equals(departmentId))
                 .min(Comparator.comparing(Employee::getSalary))
-                .orElseThrow(() -> new EmployeeNotFoundException("Сотрудника не смогли найти"));
+                .orElseThrow(() -> new EmployeeNotFoundException("Employee not found"));
     }
 
     @Override
@@ -42,7 +43,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public Map<Integer, List<Employee>> getAllEmployeesByDepartments(Integer departmentId) {
+    public Map<Integer, List<Employee>> getAllEmployeesByDepartments() {
         return getAllEmployees().stream()
                 .collect(Collectors.groupingBy((Employee::getDepartment)));
     }
@@ -53,7 +54,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         return getAllEmployees().stream()
                 .filter((employee) -> employee.getDepartment().equals(departmentId))
                 .max(Comparator.comparing(Employee::getSalary))
-                .orElseThrow(() -> new EmployeeNotFoundException("Сотрудника не смогли найти"));
+                .orElseThrow(() -> new EmployeeNotFoundException("Employee not found"));
     }
 
     @Override
@@ -64,14 +65,17 @@ public class EmployeeServiceImpl implements EmployeeService {
                 .filter(emp -> emp.equals(newEmployee))
                 .findAny()
                 .ifPresent(emp -> {
-                    throw new EmployeeAlreadyAddedException("Employee " + name + " in department " + department + " with salary " + salary + " is already added");
+                    throw new EmployeeAlreadyAddedException("Employee " + name +
+                            " in department " + department +
+                            " with salary " + salary +
+                            " is already added");
                 });
 
         if (getAllEmployees().size() >= EMPLOYEE_AMOUNT) {
             throw new ArrayIsFullException("Array is full");
         }
 
-        getAllEmployees().add(newEmployee);
+        employees.add(newEmployee);
         return newEmployee;
     }
 
@@ -79,7 +83,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     public Employee removeEmployee(String name, Integer department, Integer salary) {
         Employee employeeToRemove = new Employee(name, department, salary); // Создание временного объекта для поиска
 
-        boolean removed = getAllEmployees().removeIf(e -> e.equals(employeeToRemove));
+        boolean removed = employees.removeIf(e -> e.equals(employeeToRemove));
 
         return removed ?
                 employeeToRemove :
@@ -101,7 +105,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public List<Employee> getAllEmployees() {
-        return employees;
+        return Collections.unmodifiableList(employees);
     }
 
 }
