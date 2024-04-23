@@ -70,13 +70,14 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public Employee removeEmployee(String name, Integer department, Integer salary) {
         Employee employeeToRemove = new Employee(name, department, salary); // Создание временного объекта для поиска
-        boolean removed = employees.removeIf(e -> e.equals(employeeToRemove));
-        return removed ?
-                employeeToRemove :
-                getAllEmployees().stream()
-                        .filter(e -> e.equals(employeeToRemove))
-                        .findFirst()
-                        .orElseThrow(() -> new EmployeeNotFoundException("Employee " + name + " not found"));
+        for (Iterator<Employee> iterator = employees.iterator(); iterator.hasNext(); ) {
+            Employee employee = iterator.next();
+            if (employee.equals(employeeToRemove)) {
+                iterator.remove();
+                return employee;
+            }
+        }
+        throw new EmployeeNotFoundException("Employee " + name + " not found");
     }
 
     @Override
