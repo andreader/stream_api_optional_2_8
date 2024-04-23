@@ -17,16 +17,6 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     private final List<Employee> employees = new ArrayList<>(EMPLOYEE_AMOUNT);
 
-/*
-
-    private final List<Employee> employees = List.of(
-            new Employee("Ivan", 1, 1000),
-            new Employee("Ivan2", 1, 2000),
-            new Employee("Ivan3", 1, 3000),
-            new Employee("Ivan4", 2, 4000)
-    );
-*/
-
     @Override
     public Employee getEmployeeWithMinSalary(Integer departmentId) {
         return getAllEmployees().stream()
@@ -60,7 +50,6 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public Employee addEmployee(String name, Integer department, Integer salary) {
         Employee newEmployee = new Employee(name, department, salary);
-
         getAllEmployees().stream()
                 .filter(emp -> emp.equals(newEmployee))
                 .findAny()
@@ -70,7 +59,6 @@ public class EmployeeServiceImpl implements EmployeeService {
                             " with salary " + salary +
                             " is already added");
                 });
-
         if (getAllEmployees().size() >= EMPLOYEE_AMOUNT) {
             throw new ArrayIsFullException("Array is full");
         }
@@ -82,9 +70,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public Employee removeEmployee(String name, Integer department, Integer salary) {
         Employee employeeToRemove = new Employee(name, department, salary); // Создание временного объекта для поиска
-
         boolean removed = employees.removeIf(e -> e.equals(employeeToRemove));
-
         return removed ?
                 employeeToRemove :
                 getAllEmployees().stream()
@@ -96,7 +82,6 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public Employee findEmployee(String name, Integer department, Integer salary) {
         Employee employeeToFind = new Employee(name, department, salary); // Создание временного объекта для поиска
-
         return getAllEmployees().stream()
                 .filter(e -> e.equals(employeeToFind))
                 .findFirst()
