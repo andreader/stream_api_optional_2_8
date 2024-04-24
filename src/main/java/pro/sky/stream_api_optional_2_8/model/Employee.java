@@ -11,7 +11,7 @@ public class Employee {
     private static int counter;
 
     public Employee(String name, Integer department, Integer salary) {
-        this.id = ++ counter;
+        this.id = ++counter;
         this.name = name;
         this.department = department;
         this.salary = salary;
