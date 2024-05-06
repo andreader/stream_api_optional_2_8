@@ -2,6 +2,7 @@ package pro.sky.stream_api_optional_2_8.service;
 
 import pro.sky.stream_api_optional_2_8.model.Employee;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
@@ -21,5 +22,5 @@ public interface EmployeeService {
 
     Employee findEmployee(String name, Integer department, Integer salary);
 
-    List<Employee> getAllEmployees();
+    Collection<Employee> getAllEmployees();
 }

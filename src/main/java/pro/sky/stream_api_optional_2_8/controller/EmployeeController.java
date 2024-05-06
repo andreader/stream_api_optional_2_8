@@ -52,7 +52,7 @@ public class EmployeeController {
     }
 
     @GetMapping("/all-employees")
-    public List<Employee> getAllEmployees() {
+    public Collection<Employee> getAllEmployees() {
         return employeeService.getAllEmployees();
     }
 
