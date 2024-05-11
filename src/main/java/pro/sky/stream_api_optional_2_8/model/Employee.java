@@ -3,7 +3,6 @@ package pro.sky.stream_api_optional_2_8.model;
 import java.util.Objects;
 
 public class Employee {
-    private Integer id;
     private final String name;
     private Integer department;
     private Integer salary;
@@ -11,19 +10,11 @@ public class Employee {
     private static int counter;
 
     public Employee(String name, Integer department, Integer salary) {
-        this.id = ++counter;
         this.name = name;
         this.department = department;
         this.salary = salary;
     }
 
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
 
     public String getName() {
         return name;
@@ -48,7 +39,6 @@ public class Employee {
     @Override
     public String toString() {
         return "Employee{" +
-                "id='" + id + '\'' +
                 ", name='" + name + '\'' +
                 ", department=" + department +
                 ", salary=" + salary +

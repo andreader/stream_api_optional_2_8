@@ -5,7 +5,12 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ResponseStatus(HttpStatus.BAD_REQUEST)
 public class InvalidNameException extends ResponseException {
-    public InvalidNameException(String name) {
-        super("Invalid name:" + name);
+    @Override
+    public HttpStatus getStatus() {
+        return super.getStatus();
+    }
+
+    public InvalidNameException(String message, HttpStatus status) {
+        super(message, status);
     }
 }

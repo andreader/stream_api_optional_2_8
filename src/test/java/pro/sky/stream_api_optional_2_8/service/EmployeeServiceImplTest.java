@@ -14,7 +14,7 @@ import static org.mockito.Mockito.*;
 class EmployeeServiceImplTest {
 
     @Spy
-    EmployeeServiceImpl employeeService;
+    EmployeeServiceMapImpl employeeService;
 
     @Test
     void test1() {

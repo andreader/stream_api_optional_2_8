@@ -5,8 +5,12 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ResponseStatus(HttpStatus.BAD_REQUEST)
 public class ArrayIsFullException extends ResponseException {
-    public ArrayIsFullException(String message) {
-        super(message);
+    public ArrayIsFullException(String message, HttpStatus status) {
+        super(message, status);
     }
 
+    @Override
+    public HttpStatus getStatus() {
+        return super.getStatus();
+    }
 }

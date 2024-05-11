@@ -1,31 +1,30 @@
-package pro.sky.stream_api_optional_2_8.service;
+/*
+package pro.sky.stream_api_optional_2_8.commited_classes;
 
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import pro.sky.stream_api_optional_2_8.exceptions.ArrayIsFullException;
 import pro.sky.stream_api_optional_2_8.exceptions.EmployeeAlreadyAddedException;
-import pro.sky.stream_api_optional_2_8.exceptions.EmployeeNotFoundException;
-import pro.sky.stream_api_optional_2_8.exceptions.InvalidNameException;
 import pro.sky.stream_api_optional_2_8.model.Employee;
+import pro.sky.stream_api_optional_2_8.exceptions.EmployeeNotFoundException;
+import pro.sky.stream_api_optional_2_8.service.EmployeeService;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
-import static org.apache.commons.lang3.StringUtils.isAlpha;
-import static pro.sky.stream_api_optional_2_8.utils.Constants.*;
-
+import static pro.sky.stream_api_optional_2_8.utils.Constants.EMPLOYEE_AMOUNT;
 
 @Service
-public class EmployeeServiceMapImpl implements EmployeeService {
+public class EmployeeServiceImpl implements EmployeeService {
 
-    private final Map<String, Employee> employees = new HashMap<>(EMPLOYEE_AMOUNT);
+
+    private final List<Employee> employees = new ArrayList<>(EMPLOYEE_AMOUNT);
 
     @Override
     public Employee getEmployeeWithMinSalary(Integer departmentId) {
         return getAllEmployees().stream()
                 .filter((employee) -> employee.getDepartment().equals(departmentId))
                 .min(Comparator.comparing(Employee::getSalary))
-                .orElseThrow(() -> new EmployeeNotFoundException("Employee not found", HttpStatus.BAD_REQUEST));
+                .orElseThrow(() -> new EmployeeNotFoundException("Employee not found"));
     }
 
     @Override
@@ -47,13 +46,11 @@ public class EmployeeServiceMapImpl implements EmployeeService {
         return getAllEmployees().stream()
                 .filter((employee) -> employee.getDepartment().equals(departmentId))
                 .max(Comparator.comparing(Employee::getSalary))
-                .orElseThrow(() -> new EmployeeNotFoundException("Employee not found", HttpStatus.BAD_REQUEST));
+                .orElseThrow(() -> new EmployeeNotFoundException("Employee not found"));
     }
 
     @Override
     public Employee addEmployee(String name, Integer department, Integer salary) {
-        validateNames(name);
-
         Employee newEmployee = new Employee(name, department, salary);
         getAllEmployees().stream()
                 .filter(emp -> emp.equals(newEmployee))
@@ -62,35 +59,30 @@ public class EmployeeServiceMapImpl implements EmployeeService {
                     throw new EmployeeAlreadyAddedException("Employee " + name +
                             " in department " + department +
                             " with salary " + salary +
-                            " is already added",HttpStatus.BAD_REQUEST);
+                            " is already added");
                 });
         if (getAllEmployees().size() >= EMPLOYEE_AMOUNT) {
-            throw new ArrayIsFullException("Array is full",HttpStatus.BAD_REQUEST);
+            throw new ArrayIsFullException("Array is full");
         }
 
-        employees.put(name, newEmployee);
+        employees.add(newEmployee);
         return newEmployee;
-    }
-
-    private void validateNames(String... names) {
-        for (String name : names) {
-            if (!isAlpha(name)) {
-                throw new InvalidNameException("Invalid name", HttpStatus.BAD_REQUEST);
-            }
-        }
     }
 
     @Override
     public Employee removeEmployee(String name, Integer department, Integer salary) {
-        Employee employeeToRemove = new Employee(name, department, salary);
-        if (!employees.get(name).equals(employeeToRemove)) {
-            throw new EmployeeNotFoundException("Employee " + name +
-                    " in department " + department +
-                    " with salary " + salary +
-                    " not found", HttpStatus.BAD_REQUEST);
-        } else {
-            return employees.remove(name);
+        Employee employeeToRemove = new Employee(name, department, salary); // Создание временного объекта для поиска
+        for (Iterator<Employee> iterator = employees.iterator(); iterator.hasNext(); ) {
+            Employee employee = iterator.next();
+            if (employee.equals(employeeToRemove)) {
+                iterator.remove();
+                return employee;
+            }
         }
+        throw new EmployeeNotFoundException("Employee " + name +
+                " in department " + department +
+                " with salary " + salary +
+                " not found");
     }
 
     @Override
@@ -102,15 +94,16 @@ public class EmployeeServiceMapImpl implements EmployeeService {
                 .orElseThrow(() -> new EmployeeNotFoundException("Employee " + name +
                         " in department " + department +
                         " with salary " + salary +
-                        " not found", HttpStatus.BAD_REQUEST));
+                        " not found"));
     }
 
     @Override
     public Collection<Employee> getAllEmployees() {
-        return Collections.unmodifiableCollection(employees.values());
+        return Collections.unmodifiableList(employees);
     }
 
 }
 
 
 
+*/

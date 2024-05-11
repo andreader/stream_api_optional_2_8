@@ -5,8 +5,13 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ResponseStatus(HttpStatus.BAD_REQUEST)
 public class EmployeeAlreadyAddedException extends ResponseException {
-    public EmployeeAlreadyAddedException(String message) {
-        super(message);
+
+    public EmployeeAlreadyAddedException(String message, HttpStatus status) {
+        super(message, status);
     }
 
+    @Override
+    public HttpStatus getStatus() {
+        return super.getStatus();
+    }
 }
