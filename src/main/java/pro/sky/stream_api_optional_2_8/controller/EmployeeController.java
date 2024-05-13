@@ -43,12 +43,12 @@ public class EmployeeController {
 
     @DeleteMapping("/remove-employee")
     public Employee removeEmployee(@RequestParam String name, @RequestParam Integer department, @RequestParam Integer salary) {
-        return employeeService.removeEmployee(name, department, salary);
+        return employeeService.removeEmployee(name);
     }
 
     @GetMapping("/find-employee")
     public Employee findEmployee(@RequestParam String name, @RequestParam Integer department, @RequestParam Integer salary) {
-        return employeeService.findEmployee(name, department, salary);
+        return employeeService.findEmployee(name);
     }
 
     @GetMapping("/all-employees")

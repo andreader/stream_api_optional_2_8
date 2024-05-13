@@ -9,8 +9,4 @@ public class ArrayIsFullException extends ResponseException {
         super(message, status);
     }
 
-    @Override
-    public HttpStatus getStatus() {
-        return super.getStatus();
-    }
 }

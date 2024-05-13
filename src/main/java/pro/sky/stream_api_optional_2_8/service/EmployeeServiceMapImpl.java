@@ -62,10 +62,10 @@ public class EmployeeServiceMapImpl implements EmployeeService {
                     throw new EmployeeAlreadyAddedException("Employee " + name +
                             " in department " + department +
                             " with salary " + salary +
-                            " is already added",HttpStatus.BAD_REQUEST);
+                            " is already added", HttpStatus.BAD_REQUEST);
                 });
         if (getAllEmployees().size() >= EMPLOYEE_AMOUNT) {
-            throw new ArrayIsFullException("Array is full",HttpStatus.BAD_REQUEST);
+            throw new ArrayIsFullException("Array is full", HttpStatus.BAD_REQUEST);
         }
 
         employees.put(name, newEmployee);
@@ -81,12 +81,9 @@ public class EmployeeServiceMapImpl implements EmployeeService {
     }
 
     @Override
-    public Employee removeEmployee(String name, Integer department, Integer salary) {
-        Employee employeeToRemove = new Employee(name, department, salary);
-        if (!employees.get(name).equals(employeeToRemove)) {
+    public Employee removeEmployee(String name) {
+        if (!employees.containsKey(name)) {
             throw new EmployeeNotFoundException("Employee " + name +
-                    " in department " + department +
-                    " with salary " + salary +
                     " not found", HttpStatus.BAD_REQUEST);
         } else {
             return employees.remove(name);
@@ -94,14 +91,11 @@ public class EmployeeServiceMapImpl implements EmployeeService {
     }
 
     @Override
-    public Employee findEmployee(String name, Integer department, Integer salary) {
-        Employee employeeToFind = new Employee(name, department, salary); // Создание временного объекта для поиска
+    public Employee findEmployee(String name) {
         return getAllEmployees().stream()
-                .filter(e -> e.equals(employeeToFind))
+                .filter(e -> e.getName().equals(name))
                 .findFirst()
                 .orElseThrow(() -> new EmployeeNotFoundException("Employee " + name +
-                        " in department " + department +
-                        " with salary " + salary +
                         " not found", HttpStatus.BAD_REQUEST));
     }
 

@@ -11,6 +11,6 @@ public class ResponseException extends RuntimeException {
     }
 
     public HttpStatus getStatus() {
-        return status;
+        return HttpStatus.BAD_REQUEST;
     }
 }

@@ -10,8 +10,4 @@ public class EmployeeNotFoundException extends ResponseException {
         super(message, status);
     }
 
-    @Override
-    public HttpStatus getStatus() {
-        return super.getStatus();
-    }
 }

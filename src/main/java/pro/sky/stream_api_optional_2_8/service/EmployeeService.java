@@ -18,9 +18,9 @@ public interface EmployeeService {
 
     Employee addEmployee(String name, Integer department, Integer salary);
 
-    Employee removeEmployee(String name, Integer department, Integer salary);
+    Employee removeEmployee(String name);
 
-    Employee findEmployee(String name, Integer department, Integer salary);
+    Employee findEmployee(String name);
 
     Collection<Employee> getAllEmployees();
 }
