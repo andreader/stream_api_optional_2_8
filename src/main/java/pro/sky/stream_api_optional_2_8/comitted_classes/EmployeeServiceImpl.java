@@ -1,19 +1,21 @@
-package pro.sky.stream_api_optional_2_8.service;
+/*
+package pro.sky.stream_api_optional_2_8.commited_classes;
 
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import pro.sky.stream_api_optional_2_8.exceptions.ArrayIsFullException;
 import pro.sky.stream_api_optional_2_8.exceptions.EmployeeAlreadyAddedException;
 import pro.sky.stream_api_optional_2_8.model.Employee;
 import pro.sky.stream_api_optional_2_8.exceptions.EmployeeNotFoundException;
+import pro.sky.stream_api_optional_2_8.service.EmployeeService;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
+import static pro.sky.stream_api_optional_2_8.utils.Constants.EMPLOYEE_AMOUNT;
+
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
 
-    private static final int EMPLOYEE_AMOUNT = 4;
 
     private final List<Employee> employees = new ArrayList<>(EMPLOYEE_AMOUNT);
 
@@ -77,7 +79,10 @@ public class EmployeeServiceImpl implements EmployeeService {
                 return employee;
             }
         }
-        throw new EmployeeNotFoundException("Employee " + name + " not found");
+        throw new EmployeeNotFoundException("Employee " + name +
+                " in department " + department +
+                " with salary " + salary +
+                " not found");
     }
 
     @Override
@@ -86,11 +91,14 @@ public class EmployeeServiceImpl implements EmployeeService {
         return getAllEmployees().stream()
                 .filter(e -> e.equals(employeeToFind))
                 .findFirst()
-                .orElseThrow(() -> new EmployeeNotFoundException("Employee " + name + " not found"));
+                .orElseThrow(() -> new EmployeeNotFoundException("Employee " + name +
+                        " in department " + department +
+                        " with salary " + salary +
+                        " not found"));
     }
 
     @Override
-    public List<Employee> getAllEmployees() {
+    public Collection<Employee> getAllEmployees() {
         return Collections.unmodifiableList(employees);
     }
 
@@ -98,3 +106,4 @@ public class EmployeeServiceImpl implements EmployeeService {
 
 
 
+*/
